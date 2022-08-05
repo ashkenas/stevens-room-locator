@@ -1,5 +1,5 @@
 function Schedule({ file }) {
-    return <></>;
+    return <pre>{JSON.stringify(file, null, 2)}</pre>;
 }
 
 export default Schedule;
