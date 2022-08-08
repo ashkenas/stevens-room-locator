@@ -3,12 +3,12 @@ import FileUpload from './FileUpload';
 import Schedule from './Schedule';
 
 function App() {
-    const [file, setFile] = useState(null);
+    const [courses, setCourses] = useState(null);
 
-    if (!file)
-        return <FileUpload callback={setFile} />
+    if (!courses)
+        return <FileUpload callback={setCourses} />
 
-    return <Schedule file={file} />
+    return <Schedule courses={courses} />
 }
 
 export default App;

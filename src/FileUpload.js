@@ -34,8 +34,7 @@ function FileUpload({ callback }) {
             });
 
             return {
-                course: classRow['Course Listing'].split('-')[0].trim(),
-                type: classRow['Instructional Format'],
+                section: classRow['Section'].split(' - ')[0],
                 meetings: meetings
             };
         }).filter((course) => course);

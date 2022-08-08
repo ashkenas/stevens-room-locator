@@ -1,5 +1,7 @@
-function Schedule({ file }) {
-    return <pre>{JSON.stringify(file, null, 2)}</pre>;
+import Course from "./Course";
+
+function Schedule({ courses }) {
+    return <>{courses.map((course) => <Course key={course.section} course={course} />)}</>;
 }
 
 export default Schedule;
