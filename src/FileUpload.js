@@ -18,7 +18,10 @@ function FileUpload({ callback }) {
             worksheet['!ref'] += ':' + maxCell(worksheet);
 
         const data = XLSX.utils.sheet_to_json(worksheet, { range: 2 });
-        const classes = data.map((classRow) => {
+        const courses = data.map((classRow) => {
+            if (!classRow['Meeting Patterns'])
+                return false;
+
             const timeSlots = classRow['Meeting Patterns'].split('\n').filter((timeSlot) => timeSlot);
             const meetings = timeSlots.map((timeSlot) => {
                 let [fm, days, start, stop, room] = timeSlot.match(/^(.*?) \| (.*?) - (.*?) \| (.*?)$/);
@@ -35,9 +38,9 @@ function FileUpload({ callback }) {
                 type: classRow['Instructional Format'],
                 meetings: meetings
             };
-        });
+        }).filter((course) => course);
 
-        callback(classes);
+        callback(courses);
     };
 
     return <input type="file" onChange={readFile} />;
