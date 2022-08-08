@@ -24,10 +24,13 @@ function FileUpload({ callback }) {
 
             const timeSlots = classRow['Meeting Patterns'].split('\n').filter((timeSlot) => timeSlot);
             const meetings = timeSlots.map((timeSlot) => {
-                let [fm, days, start, stop, room] = timeSlot.match(/^(.*?) \| (.*?) - (.*?) \| (.*?)$/);
+                const [, days, start, stop, room] = timeSlot.match(/^(.*?) \| (.*?) - (.*?) \| (.*?)$/);
+                const [, startHour, startMinute, startHalf] = start.match(/([0-9]+):([0-9]+) (AM|PM)/);
+                const [, stopHour, stopMinute, stopHalf] = stop.match(/([0-9]+):([0-9]+) (AM|PM)/);
+
                 return {
-                    start: start,
-                    stop: stop,
+                    start: ((+startHour % 12) + (startHalf === 'AM' ? 0 : 12)) + (+startMinute / 60),
+                    stop: ((+stopHour % 12) + (stopHalf === 'AM' ? 0 : 12)) + (+stopMinute / 60),
                     room: room,
                     days: days.split('/')
                 };

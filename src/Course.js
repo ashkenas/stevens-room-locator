@@ -2,6 +2,7 @@ function Course({ course }) {
     const meetings = [];
 
     for (const meeting of course.meetings) {
+        console.log(meeting);
         for (const day of meeting.days) {
             meetings.push(
                 <div key={meeting.room + day} className="course" style={{ backgroundColor: course.color }}>
