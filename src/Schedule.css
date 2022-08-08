@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    position: relative;
+    height: 4rem;
+    width: auto;
+    border: 1px solid black;
+}
+
+td.time {
+    width: 1px;
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: top;
+    border: none;
+}

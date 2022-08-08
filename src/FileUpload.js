@@ -38,7 +38,8 @@ function FileUpload({ callback }) {
 
             return {
                 section: classRow['Section'].split(' - ')[0],
-                meetings: meetings
+                meetings: meetings,
+                color: '#d1d1d1'
             };
         }).filter((course) => course);
 

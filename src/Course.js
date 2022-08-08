@@ -1,19 +1,15 @@
-function Course({ course }) {
-    const meetings = [];
+import "./Course.css";
 
-    for (const meeting of course.meetings) {
-        console.log(meeting);
-        for (const day of meeting.days) {
-            meetings.push(
-                <div key={meeting.room + day} className="course" style={{ backgroundColor: course.color }}>
-                    <p className="course-section">{course.section}</p>
-                    <p className="course-room">{meeting.room}</p>
-                </div>
-            );
-        }
-    }
+function Course({ course, meeting }) {
+    const offset = `${(meeting.start - Math.floor(meeting.start)) * 100}%`;
+    const height = `${(meeting.stop - meeting.start) * 100}%`;
 
-    return <>{meetings}</>
+    return (
+        <div className="course" style={{ backgroundColor: course.color, top: offset, height: height }}>
+            <p className="course-section">{course.section}</p>
+            <p className="course-room">{meeting.room}</p>
+        </div>
+    );
 }
 
 export default Course;
