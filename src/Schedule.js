@@ -1,50 +1,36 @@
 import Course from "./Course";
 import "./Schedule.css";
 
-function Schedule({ courses }) {
+function Schedule({ schedule }) {
+    const courses = schedule.flat();
     const firstHour = courses.reduce((earliest, course) => {
-        return course.meetings.reduce((_earliest, meeting) => {
-            return _earliest > Math.floor(meeting.start) ? Math.floor(meeting.start) : _earliest;
-        }, earliest);
+        return earliest > Math.floor(course.start) ? Math.floor(course.start) : earliest;
     }, 24);
     const lastHour = courses.reduce((latest, course) => {
-        return course.meetings.reduce((_latest, meeting) => {
-            return _latest < Math.ceil(meeting.stop) ? Math.ceil(meeting.stop) : _latest;
-        }, latest);
+        return latest < Math.ceil(course.stop) ? Math.ceil(course.stop) : latest;
     }, 0);
 
-    const rows = [];
-    for (let i = firstHour; i < lastHour; i++) {
-        const coursesNow = courses.reduce((now, course) => {
-            return course.meetings.reduce((_now, meeting) => {
-                if (Math.floor(meeting.start) === i) {
-                    return meeting.days.reduce((days, day) => {
-                        if (days[day]) {
-                            days[day].push(
-                                <Course key={course.section + day} course={course} meeting={meeting} />
-                            );
-                        } else {
-                            days[day] = [
-                                <Course key={course.section + day} course={course} meeting={meeting} />
-                            ];
-                        }
-
-                        return days;
-                    }, _now);
-                } else {
-                    return _now;
-                }
-            }, now);
-        }, {});
-
+    const rows = [
+        <tr key={firstHour}>
+            <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour}:00 {firstHour > 11 ? 'P' : 'A'}M</td>
+            <td>{schedule[0].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[1].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[2].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[3].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[4].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[5].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+        </tr>
+    ];
+    for (let i = firstHour + 1; i < lastHour; i++) {
         rows.push(
             <tr key={i}>
                 <td className="time">{i > 12 ? i % 12 : i}:00 {i > 11 ? 'P' : 'A'}M</td>
-                <td>{coursesNow.Monday !== undefined && coursesNow.Monday}</td>
-                <td>{coursesNow.Tuesday !== undefined && coursesNow.Tuesday}</td>
-                <td>{coursesNow.Wednesday !== undefined && coursesNow.Wednesday}</td>
-                <td>{coursesNow.Thursday !== undefined && coursesNow.Thursday}</td>
-                <td>{coursesNow.Friday !== undefined && coursesNow.Friday}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         );
     }

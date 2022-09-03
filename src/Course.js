@@ -1,13 +1,12 @@
 import "./Course.css";
 
-function Course({ course, meeting }) {
-    const offset = `${(meeting.start - Math.floor(meeting.start)) * 100}%`;
-    const height = `${(meeting.stop - meeting.start) * 100}%`;
+function Course({ course, firstHour }) {
+    const offset = `${(course.start - firstHour) * 100}%`;
+    const height = `${(course.stop - course.start) * 100}%`;
 
     return (
-        <div className="course" style={{ backgroundColor: course.color, top: offset, height: height }}>
-            <p className="course-section">{course.section}</p>
-            <p className="course-room">{meeting.room}</p>
+        <div className="course" style={{ top: offset, height: height }}>
+            <p className="course-section">{course.course}</p>
         </div>
     );
 }

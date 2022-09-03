@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Schedule from './Schedule';
 
 const dayLetterToNumber = {
     M: 0,
@@ -49,8 +50,12 @@ function App() {
 
                 setData(newData);
             });
+
+        return <></>;
     } else {
-        console.log(data);
+        return (<>
+            {Object.keys(data.schedule).map(room => <Schedule key={room} schedule={data.schedule[room]} /> )}
+        </>);
     }
 }
 
