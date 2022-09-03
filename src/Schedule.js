@@ -11,6 +11,15 @@ function Schedule({ schedule }) {
     }, 0);
 
     const rows = [
+        <tr key="headers">
+            <td></td>
+            <td>Monday</td>
+            <td>Tuesday</td>
+            <td>Wednesday</td>
+            <td>Thursday</td>
+            <td>Friday</td>
+            <td>Sunday</td>
+        </tr>,
         <tr key={firstHour}>
             <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour}:00 {firstHour > 11 ? 'P' : 'A'}M</td>
             <td>{schedule[0].map(course => <Course course={course} firstHour={firstHour} />)}</td>

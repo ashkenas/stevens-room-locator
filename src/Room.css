@@ -1,0 +1,21 @@
+.room {
+    border: 1px solid #38a2d7;
+    border-radius: .5rem;
+    margin: .5rem;
+    padding: .5rem;
+    background-color: #424242;
+}
+
+.summary > span:first-child {
+    margin: 0 1rem 0 .25rem;
+}
+
+.room > .summary::before {
+    content: '⯈';
+    display: inline-block;
+    transition: transform .1s, height .1s;
+}
+
+.room.expanded > .summary::before {
+    transform: rotate(90deg);
+}

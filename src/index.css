@@ -8,6 +8,8 @@ html, body {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    color: #dedede;
+    background-color: #333333;
 }
 
 *, *::after, *::before {

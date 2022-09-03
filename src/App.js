@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Schedule from './Schedule';
+import Room from './Room';
 
 const dayLetterToNumber = {
     M: 0,
@@ -26,9 +26,9 @@ function App() {
 
                 const rooms = [...doc.querySelectorAll('a > b')];
                 for (const room of rooms) {
-                    const [roomName, roomCapacity] = room.innerText.split('_');
+                    const [, roomName, roomCapacity] = /^(.*?)_\((.*?)\)/.exec(room.innerText);
                     newData.rooms.push(roomName);
-                    newData.capacity[roomName] = roomCapacity;
+                    newData.capacity[roomName] = +roomCapacity;
 
                     const schedule = [[], [], [], [], [], []];
                     [...doc.querySelectorAll(`b[id="${room.innerText}"] + a + table tr`)].slice(1).forEach((row) => {
@@ -54,7 +54,7 @@ function App() {
         return <></>;
     } else {
         return (<>
-            {Object.keys(data.schedule).map(room => <Schedule key={room} schedule={data.schedule[room]} /> )}
+            {Object.keys(data.schedule).map(room => <Room key={room} room={room} capacity={data.capacity[room]} schedule={data.schedule[room]} /> )}
         </>);
     }
 }
