@@ -22,12 +22,12 @@ function Schedule({ schedule }) {
         </tr>,
         <tr key={firstHour}>
             <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour}:00 {firstHour > 11 ? 'P' : 'A'}M</td>
-            <td>{schedule[0].map(course => <Course course={course} firstHour={firstHour} />)}</td>
-            <td>{schedule[1].map(course => <Course course={course} firstHour={firstHour} />)}</td>
-            <td>{schedule[2].map(course => <Course course={course} firstHour={firstHour} />)}</td>
-            <td>{schedule[3].map(course => <Course course={course} firstHour={firstHour} />)}</td>
-            <td>{schedule[4].map(course => <Course course={course} firstHour={firstHour} />)}</td>
-            <td>{schedule[5].map(course => <Course course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[1].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[2].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[3].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[4].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
+            <td>{schedule[5].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
         </tr>
     ];
     for (let i = firstHour + 1; i < lastHour; i++) {
