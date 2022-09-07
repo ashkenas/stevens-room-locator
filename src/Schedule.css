@@ -3,16 +3,17 @@ table {
     margin-top: .5rem;
     border-collapse: collapse;
     table-layout: fixed;
+    color: #333333;
 }
 
 td {
     position: relative;
     height: 4rem;
-    border: 1px solid #efefef;
+    border: 1px solid #c1c1c1;
 }
 
 td:first-child {
-    width: 5rem;
+    width: 4rem;
 }
 
 td.time {
@@ -27,4 +28,19 @@ tr:first-child td {
     border: none;
     height: auto;
     text-align: center;
+}
+
+@media (orientation: landscape) {
+    tr:first-child td:not(:first-child)::after {
+        content: 'day'
+    }
+
+    .center {
+        display: flex;
+        justify-content: center;
+    }
+
+    table {
+        width: 50%;
+    }
 }

@@ -13,15 +13,15 @@ function Schedule({ schedule }) {
     const rows = [
         <tr key="headers">
             <td></td>
-            <td>Monday</td>
-            <td>Tuesday</td>
-            <td>Wednesday</td>
-            <td>Thursday</td>
-            <td>Friday</td>
-            <td>Sunday</td>
+            <td>Mon</td>
+            <td>Tues</td>
+            <td>Wednes</td>
+            <td>Thurs</td>
+            <td>Fri</td>
+            <td>Satur</td>
         </tr>,
         <tr key={firstHour}>
-            <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour}:00 {firstHour > 11 ? 'P' : 'A'}M</td>
+            <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour} {firstHour > 11 ? 'P' : 'A'}M</td>
             <td>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
             <td>{schedule[1].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
             <td>{schedule[2].map(course => <Course key={course.course} course={course} firstHour={firstHour} />)}</td>
@@ -33,7 +33,7 @@ function Schedule({ schedule }) {
     for (let i = firstHour + 1; i < lastHour; i++) {
         rows.push(
             <tr key={i}>
-                <td className="time">{i > 12 ? i % 12 : i}:00 {i > 11 ? 'P' : 'A'}M</td>
+                <td className="time">{i > 12 ? i % 12 : i} {i > 11 ? 'P' : 'A'}M</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -45,11 +45,13 @@ function Schedule({ schedule }) {
     }
 
     return (
-        <table>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+        <div className="center">
+            <table>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

@@ -2,8 +2,9 @@
     position: absolute;
     width: 90%;
     margin-left: 5%;
-    background-color: #737272;
-    color: #34d4c7;
+    background-color: #e6ebed;
+    color: #333333;
+    overflow: hidden;
 }
 
 .course-section {

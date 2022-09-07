@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Room from './Room';
+import "./App.css";
 
 const dayLetterToNumber = {
     M: 0,
@@ -14,7 +15,7 @@ function App() {
     const [data, setData] = useState(null);
     const [filters, setFilters] = useState({});
     const setFilter = (filter, { target }) => {
-        if (target == undefined)
+        if (target === undefined)
             return;
 
         const newFilters = { ...filters };
@@ -77,11 +78,19 @@ function App() {
             validRooms = validRooms.filter(room => data.capacity[room] >= filters.capacity);
 
         return (<>
-            <select onChange={setFilter.bind(null, 'building')}>
-                <option value="undefined">Any Building</option>
-                {data.buildings.map(building => <option key={building} value={building}>{building}</option>)}
-            </select>
-            <input onChange={setFilter.bind(null, 'capacity')} type="number" min={data.minCap} max={data.maxCap} step={1} value={filters.capacity} />
+            <div className="controls">
+                <div className="field">
+                    <button disabled>Building</button>
+                    <select onChange={setFilter.bind(null, 'building')}>
+                        <option value="undefined">Any Building</option>
+                        {data.buildings.map(building => <option key={building} value={building}>{building}</option>)}
+                    </select>
+                </div>
+                <div className="field">
+                    <button disabled>Min Capacity</button>
+                    <input onChange={setFilter.bind(null, 'capacity')} type="number" min={data.minCap} max={data.maxCap} step={1} value={filters.capacity} />
+                </div>
+            </div>
             {validRooms.map(room => <Room key={room} room={room} capacity={data.capacity[room]} schedule={data.schedule[room]} /> )}
         </>);
     }
