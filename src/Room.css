@@ -6,6 +6,10 @@
     background-color: #f5f5f5;
 }
 
+.summary {
+    cursor: pointer;
+}
+
 .summary > span:first-child {
     margin: 0 1rem 0 .25rem;
 }
@@ -13,9 +17,20 @@
 .room > .summary::before {
     content: '⯈';
     display: inline-block;
-    transition: transform .1s, height .1s;
+    transition: transform .1s;
 }
 
 .room.expanded > .summary::before {
     transform: rotate(90deg);
+}
+
+@media (orientation: portrait) {
+    .room > .summary::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: .35rem solid transparent;
+        border-left: .55rem solid;
+        border-bottom: .35rem solid transparent;
+    }
 }

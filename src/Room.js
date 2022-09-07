@@ -6,8 +6,8 @@ function Room({ room, capacity, schedule }) {
     const [showContents, setShowContents] = useState(false);
 
     return (
-        <div className={`room${showContents ? ' expanded' : ''}`} onClick={() => setShowContents(!showContents)}>
-            <div className='summary'>
+        <div className={`room${showContents ? ' expanded' : ''}`}>
+            <div className='summary' onClick={() => setShowContents(!showContents)}>
                 <span>{room}</span>
                 <span>Capacity: {capacity}</span>
             </div>
