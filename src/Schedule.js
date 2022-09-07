@@ -13,12 +13,12 @@ function Schedule({ schedule }) {
     const rows = [
         <tr key="headers">
             <td></td>
-            <td>Mon</td>
-            <td>Tues</td>
-            <td>Wednes</td>
-            <td>Thurs</td>
-            <td>Fri</td>
-            <td>Satur</td>
+            <td data-mobile="Mon" data-desktop="Monday"></td>
+            <td data-mobile="Tue" data-desktop="Tuesday"></td>
+            <td data-mobile="Wed" data-desktop="Wednesday"></td>
+            <td data-mobile="Thu" data-desktop="Thursday"></td>
+            <td data-mobile="Fri" data-desktop="Friday"></td>
+            <td data-mobile="Sat" data-desktop="Saturday"></td>
         </tr>,
         <tr key={firstHour}>
             <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour} {firstHour > 11 ? 'P' : 'A'}M</td>

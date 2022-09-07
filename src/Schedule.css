@@ -30,9 +30,13 @@ tr:first-child td {
     text-align: center;
 }
 
+tr:first-child td:not(:first-child)::after {
+    content: attr(data-mobile);
+}
+
 @media (orientation: landscape) {
     tr:first-child td:not(:first-child)::after {
-        content: 'day'
+        content: attr(data-desktop);
     }
 
     .center {
@@ -42,5 +46,6 @@ tr:first-child td {
 
     table {
         width: 50%;
+        min-width: 650px;
     }
 }
