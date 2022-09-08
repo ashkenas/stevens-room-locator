@@ -1,2 +1,2 @@
-# Workday Schedule Generator
-Uses spreadsheet export from Workday to generate a schedule. Designed with Stevens Institute of Technology's data format in mind.
+# Stevens Room Locator
+Scrapes the Stevens Institute of Technology room schedule and produces a human useable version.
