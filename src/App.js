@@ -14,7 +14,7 @@ const dayLetterToNumber = {
 
 function App() {
     const [data, setData] = useState(null);
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState({ day: '0' });
     const setFilter = (filter, { target }) => {
         if (target === undefined)
             return;
@@ -62,7 +62,7 @@ function App() {
                 newData.minCap = Math.min(...Object.values(newData.capacity));
 
                 setData(newData);
-                setFilters({ capacity: newData.minCap });
+                setFilters({ ...filters, capacity: newData.minCap });
             });
 
         return <Spinner />;
@@ -77,6 +77,26 @@ function App() {
             validRooms = validRooms.filter(room => room.startsWith(`${filters.building}-`));
         if (filters.capacity)
             validRooms = validRooms.filter(room => data.capacity[room] >= filters.capacity);
+        if (filters.start && filters.stop) {
+            const start = +filters.start.substring(0, 2) + (+filters.start.substring(3, 5) / 60);
+            const stop = +filters.stop.substring(0, 2) + (+filters.stop.substring(3, 5) / 60);
+            validRooms = validRooms.filter(room => {
+                const schedule = data.schedule[room][+filters.day];
+                if (!schedule.length)
+                    return true;
+
+                if (schedule[0].start > stop || schedule[schedule.length - 1].stop < start)
+                    return true;
+
+                for (let i = 0; i < schedule.length - 1; i++) {
+                    if (schedule[i].stop < start && schedule[i + 1].start > stop)
+                        return true;
+                }
+
+                return false;
+            });
+        }
+
 
         return (<>
             <div className="controls">
@@ -90,6 +110,25 @@ function App() {
                 <div className="field">
                     <button disabled>Min Capacity</button>
                     <input onChange={setFilter.bind(null, 'capacity')} type="number" min={data.minCap} max={data.maxCap} step={1} value={filters.capacity} />
+                </div>
+                <div className="field">
+                    <button disabled>Day</button>
+                    <select onChange={setFilter.bind(null, 'day')}>
+                        <option value="0">Mon</option>
+                        <option value="1">Tue</option>
+                        <option value="2">Wed</option>
+                        <option value="3">Thu</option>
+                        <option value="4">Fri</option>
+                        <option value="5">Sat</option>
+                    </select>
+                </div>
+                <div className="field">
+                    <button disabled>Start Time</button>
+                    <input onChange={setFilter.bind(null, 'start')} type="time" />
+                </div>
+                <div className="field">
+                    <button disabled>End Time</button>
+                    <input onChange={setFilter.bind(null, 'stop')} type="time" />
                 </div>
             </div>
             {validRooms.map(room => <Room key={room} room={room} capacity={data.capacity[room]} schedule={data.schedule[room]} /> )}
