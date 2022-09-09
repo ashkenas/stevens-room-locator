@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Room from './Room';
 import "./App.css";
+import Spinner from './Spinner';
 
 const dayLetterToNumber = {
     M: 0,
@@ -64,7 +65,7 @@ function App() {
                 setFilters({ capacity: newData.minCap });
             });
 
-        return <></>;
+        return <Spinner />;
     } else {
         if (filters.capacity && filters.capacity > data.maxCap)
             setFilters({ ...filters, capacity: data.maxCap });
