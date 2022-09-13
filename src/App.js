@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Room from './Room';
 import "./App.css";
 import Spinner from './Spinner';
+import Popup from './Popup';
 
 const dayLetterToNumber = {
     M: 0,
@@ -14,6 +15,7 @@ const dayLetterToNumber = {
 
 function App() {
     const [data, setData] = useState(null);
+    const [popup, setPopup] = useState(null);
     const [filters, setFilters] = useState({ day: '0' });
     const setFilter = (filter, { target }) => {
         if (target === undefined)
@@ -45,11 +47,16 @@ function App() {
                     [...doc.querySelectorAll(`b[id="${room.innerText}"] + a + table tr`)].slice(1).forEach((row) => {
                         const dayLetter = row.firstElementChild.innerText;
                         [...row.querySelectorAll('td[bgcolor]')].forEach(timeBlock => {
-                            const [, course, start, stop] = /^(.*?)\(.*?\[(.*?)-(.*?)\]/.exec(timeBlock.innerText);
+                            const [, course, students, classCap, prof, start, stop] = /(.*)\(([0-9]*)\/([0-9]*)\)\n?(.*)\[(.*)-(.*)\]/.exec(timeBlock.innerText);
                             schedule[dayLetterToNumber[dayLetter]].push({
                                 course: course,
+                                prof: prof,
+                                students: students,
+                                classCap: classCap,
                                 start: +start.substring(0, 2) + (+start.substring(2) / 60),
-                                stop: +stop.substring(0, 2) + (+stop.substring(2) / 60)
+                                startString: start,
+                                stop: +stop.substring(0, 2) + (+stop.substring(2) / 60),
+                                stopString: stop
                             });
                         });
                     });
@@ -131,7 +138,8 @@ function App() {
                     <input onChange={setFilter.bind(null, 'stop')} type="time" />
                 </div>
             </div>
-            {validRooms.map(room => <Room key={room} room={room} capacity={data.capacity[room]} schedule={data.schedule[room]} /> )}
+            {validRooms.map(room => <Room key={room} room={room} capacity={data.capacity[room]} schedule={data.schedule[room]} setData={setPopup} /> )}
+            <Popup data={popup} />
         </>);
     }
 }

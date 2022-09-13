@@ -5,6 +5,7 @@
     background-color: #e6ebed;
     color: #333333;
     overflow: hidden;
+    z-index: 999;
 }
 
 .course-section {

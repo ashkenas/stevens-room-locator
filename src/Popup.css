@@ -1,0 +1,16 @@
+.popup {
+    position: fixed;
+    background-color: #ffffff;
+    border: 1px solid black;
+    border-radius: .5rem;
+    z-index: 1000;
+}
+
+.popup > div:first-child {
+    padding: .5rem;
+    border-bottom: 1px solid black;
+}
+
+.popup > div:not(:first-child) {
+    margin: .5rem;
+}

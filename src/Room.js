@@ -2,7 +2,7 @@ import { useState } from "react";
 import Schedule from "./Schedule";
 import "./Room.css";
 
-function Room({ room, capacity, schedule }) {
+function Room({ room, capacity, schedule, setData }) {
     const [showContents, setShowContents] = useState(false);
 
     return (
@@ -11,7 +11,7 @@ function Room({ room, capacity, schedule }) {
                 <span>{room}</span>
                 <span>Capacity: {capacity}</span>
             </div>
-            {showContents && <Schedule schedule={schedule} />}
+            {showContents && <Schedule schedule={schedule} setData={setData} />}
         </div>
     )
 }
