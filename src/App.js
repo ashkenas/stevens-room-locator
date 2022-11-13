@@ -27,50 +27,48 @@ function App() {
     };
 
     if (!data) {
-        fetch('https://cors-go-away.herokuapp.com/?u=https://web.stevens.edu/roomsched/wdprod/', { mode: 'cors' })
-            .then(res => res.text())
-            .then(text => {
-                const doc = new DOMParser().parseFromString(text, 'text/html');
-                const newData = {
-                    rooms: [],
-                    capacity: {},
-                    schedule: {}
-                };
-
-                const rooms = [...doc.querySelectorAll('a > b')];
-                for (const room of rooms) {
-                    const [, roomName, roomCapacity] = /^(.*?)_\((.*?)\)/.exec(room.innerText);
-                    newData.rooms.push(roomName);
-                    newData.capacity[roomName] = +roomCapacity;
-
-                    const schedule = [[], [], [], [], [], []];
-                    [...doc.querySelectorAll(`b[id="${room.innerText}"] + a + table tr`)].slice(1).forEach((row) => {
-                        const dayLetter = row.firstElementChild.innerText;
-                        [...row.querySelectorAll('td[bgcolor]')].forEach(timeBlock => {
-                            const [, course, students, classCap, prof, start, stop] = /(.*)\(([0-9]*)\/([0-9]*)\)\n?(.*)\[(.*)-(.*)\]/.exec(timeBlock.innerText);
-                            schedule[dayLetterToNumber[dayLetter]].push({
-                                course: course,
-                                prof: prof,
-                                students: students,
-                                classCap: classCap,
-                                start: +start.substring(0, 2) + (+start.substring(2) / 60),
-                                startString: start,
-                                stop: +stop.substring(0, 2) + (+stop.substring(2) / 60),
-                                stopString: stop
-                            });
+        fetch('/api/getSchedule').then(res => res.text()).then(text => {
+            const doc = new DOMParser().parseFromString(text, 'text/html');
+            const newData = {
+                rooms: [],
+                capacity: {},
+                schedule: {}
+            };
+        
+            const rooms = [...doc.querySelectorAll('a > b')];
+            for (const room of rooms) {
+                const [, roomName, roomCapacity] = /^(.*?)_\((.*?)\)/.exec(room.innerText);
+                newData.rooms.push(roomName);
+                newData.capacity[roomName] = +roomCapacity;
+        
+                const schedule = [[], [], [], [], [], []];
+                [...doc.querySelectorAll(`b[id="${room.innerText}"] + a + table tr`)].slice(1).forEach((row) => {
+                    const dayLetter = row.firstElementChild.innerText;
+                    [...row.querySelectorAll('td[bgcolor]')].forEach(timeBlock => {
+                        const [, course, students, classCap, prof, start, stop] = /(.*)\(([0-9]*)\/([0-9]*)\)\n?(.*)\[(.*)-(.*)\]/.exec(timeBlock.innerText);
+                        schedule[dayLetterToNumber[dayLetter]].push({
+                            course: course,
+                            prof: prof,
+                            students: students,
+                            classCap: classCap,
+                            start: +start.substring(0, 2) + (+start.substring(2) / 60),
+                            startString: start,
+                            stop: +stop.substring(0, 2) + (+stop.substring(2) / 60),
+                            stopString: stop
                         });
                     });
+                });
+        
+                newData.schedule[roomName] = schedule;
+            }
+        
+            newData.buildings = newData.rooms.map(room => room.split('-')[0]).filter((v, i, a) => a.indexOf(v) === i);
+            newData.maxCap = Math.max(...Object.values(newData.capacity));
+            newData.minCap = Math.min(...Object.values(newData.capacity));
 
-                    newData.schedule[roomName] = schedule;
-                }
-
-                newData.buildings = newData.rooms.map(room => room.split('-')[0]).filter((v, i, a) => a.indexOf(v) === i);
-                newData.maxCap = Math.max(...Object.values(newData.capacity));
-                newData.minCap = Math.min(...Object.values(newData.capacity));
-
-                setData(newData);
-                setFilters({ ...filters, capacity: newData.minCap });
-            });
+            setData(newData);
+            setFilters({ ...filters, capacity: newData.minCap });
+        });
 
         return <Spinner />;
     } else {
