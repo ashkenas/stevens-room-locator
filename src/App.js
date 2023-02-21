@@ -46,6 +46,7 @@ function App() {
                     const dayLetter = row.firstElementChild.innerText;
                     [...row.querySelectorAll('td[bgcolor]')].forEach(timeBlock => {
                         const [, course, students, classCap, prof, start, stop] = /(.*)\(([0-9]*)\/([0-9]*)\)\n?(.*)\[(.*)-(.*)\]/.exec(timeBlock.innerText);
+                        if (dayLetterToNumber[dayLetter] === undefined) return;
                         schedule[dayLetterToNumber[dayLetter]].push({
                             course: course,
                             prof: prof,
@@ -101,7 +102,6 @@ function App() {
                 return false;
             });
         }
-
 
         return (<>
             <div className="controls">
