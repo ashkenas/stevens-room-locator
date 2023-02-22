@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Course from "./Course";
 import "./Schedule.css";
 
