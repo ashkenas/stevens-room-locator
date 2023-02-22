@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Room from './Room';
 import "./App.css";
 import Spinner from './Spinner';

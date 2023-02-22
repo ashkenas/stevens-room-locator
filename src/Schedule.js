@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Course from "./Course";
 import "./Schedule.css";
 
 function Schedule({ schedule, setData }) {
-    const tdRef = useRef(undefined);
+    const [tdRef, setTdref] = useState(null);
     const courses = schedule.flat();
     const firstHour = courses.reduce((earliest, course) => {
         return earliest > Math.floor(course.start) ? Math.floor(course.start) : earliest;
@@ -13,12 +13,9 @@ function Schedule({ schedule, setData }) {
     }, 0);
 
     useEffect(() => {
-        if (tdRef.current) {
-            window.borderWidth = document
-                .querySelector('tr:not(:first-child) td:not(:first-child)')
-                .computedStyleMap().get('border-top-width').value;
-        }
-    }, [tdRef.current])
+        if (tdRef)
+            window.borderWidth = tdRef.computedStyleMap().get('border-top-width').value;
+    }, [tdRef])
 
     const rows = [
         <tr key="headers">
@@ -31,8 +28,8 @@ function Schedule({ schedule, setData }) {
             <td data-mobile="Sat" data-desktop="Saturday"></td>
         </tr>,
         <tr key={firstHour}>
-            <td className="time" ref={tdRef}>{firstHour > 12 ? firstHour % 12 : firstHour} {firstHour > 11 ? 'P' : 'A'}M</td>
-            <td>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
+            <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour} {firstHour > 11 ? 'P' : 'A'}M</td>
+            <td ref={setTdref}>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[1].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[2].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[3].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
