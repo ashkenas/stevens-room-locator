@@ -3,7 +3,8 @@ import "./Course.css";
 function Course({ course, firstHour, setData }) {
     const offset = `${(course.start - firstHour) * 100}%`;
     const height = `${(course.stop - course.start) * 100}%`;
-    const extraOffsetPixels = Math.floor(course.start) - firstHour;
+    const extraOffsetPixels = (Math.floor(course.start) - firstHour)
+        * (window.borderWidth || 1);
     const extraHeightPixels = Math.floor(course.stop - course.start);
 
     return (

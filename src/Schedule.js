@@ -10,6 +10,14 @@ function Schedule({ schedule, setData }) {
         return latest < Math.ceil(course.stop) ? Math.ceil(course.stop) : latest;
     }, 0);
 
+    useEffect(() => {
+        if (window && !window.borderWidth) {
+            window.borderWidth = document
+                .querySelector('tr:not(:first-child) td:not(:first-child)')
+                .computedStyleMap().get('border-top-width').value;
+        }
+    })
+
     const rows = [
         <tr key="headers">
             <td></td>

@@ -9,6 +9,7 @@ table {
 td {
     position: relative;
     height: 4rem;
+    padding: 0;
     border: 1px solid #c1c1c1;
 }
 
