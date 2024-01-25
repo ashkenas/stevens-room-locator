@@ -110,7 +110,6 @@ function App() {
     }, [data, filters]);
 
     if (!data) return <Spinner />;
-    console.log(data);
 
     return (<>
         <h1>SIT Room Locator</h1>

@@ -1,20 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import Course from "./Course";
 import "./Schedule.css";
 
 function Schedule({ schedule, setData }) {
-    const tdRef = useRef(null);
+    const [tdRef, setTdref] = useState(null);
     const courses = schedule.flat();
     const firstHour = courses.reduce((earliest, course) => {
-        return earliest > Math.floor(course.start) ? Math.floor(course.start) : earliest;
+        return Math.min(Math.floor(course.start), earliest);
     }, 24);
     const lastHour = courses.reduce((latest, course) => {
-        return latest < Math.ceil(course.stop) ? Math.ceil(course.stop) : latest;
+        return Math.max(Math.ceil(course.stop), latest);
     }, 0);
 
     useEffect(() => {
-        if (tdRef.current)
-            window.borderWidth = tdRef.current.computedStyleMap().get('border-top-width').value;
+        if (tdRef)
+            window.borderWidth = +getComputedStyle(tdRef).borderTopWidth
+                .replaceAll(/[^\d.]/g, '');
     }, [tdRef])
 
     const rows = [
@@ -29,7 +30,7 @@ function Schedule({ schedule, setData }) {
         </tr>,
         <tr key={firstHour}>
             <td className="time">{firstHour > 12 ? firstHour % 12 : firstHour} {firstHour > 11 ? 'P' : 'A'}M</td>
-            <td ref={tdRef}>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
+            <td ref={setTdref}>{schedule[0].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[1].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[2].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
             <td>{schedule[3].map(course => <Course key={course.course} course={course} firstHour={firstHour} setData={setData} />)}</td>
