@@ -2,35 +2,25 @@
     border: 1px solid #e3e3e3;
     border-radius: .5rem;
     margin: .5rem;
-    padding: .5rem;
     background-color: #f5f5f5;
 }
 
 .summary {
+    display: flex;
+    align-items: center;
+    padding: .5rem;
     cursor: pointer;
+    user-select: none;
 }
 
-.summary > span:first-child {
-    margin: 0 1rem 0 .25rem;
-}
-
-.room > .summary::before {
-    content: '⯈';
-    display: inline-block;
+.summary > img {
     transition: transform .1s;
 }
 
-.room.expanded > .summary::before {
-    transform: rotate(90deg);
+.summary > span:first-of-type {
+    margin: 0 1rem 0 .25rem;
 }
 
-@media (orientation: portrait) {
-    .room > .summary::before {
-        content: '';
-        width: 0;
-        height: 0;
-        border-top: .35rem solid transparent;
-        border-left: .55rem solid;
-        border-bottom: .35rem solid transparent;
-    }
+.room.expanded > .summary > img {
+    transform: rotate(90deg);
 }

@@ -35,6 +35,10 @@ tr:first-child td:not(:first-child)::after {
     content: attr(data-mobile);
 }
 
+.center {
+    padding: 0 .25rem .5rem 0;
+}
+
 @media (orientation: landscape) {
     tr:first-child td:not(:first-child)::after {
         content: attr(data-desktop);

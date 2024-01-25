@@ -8,6 +8,7 @@ function Room({ room, capacity, schedule, setData }) {
     return (
         <div className={`room${showContents ? ' expanded' : ''}`}>
             <div className='summary' onClick={() => setShowContents(!showContents)}>
+                <img src="/arrow.svg" />
                 <span>{room}</span>
                 <span>Capacity: {capacity}</span>
             </div>

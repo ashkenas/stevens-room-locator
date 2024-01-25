@@ -114,7 +114,7 @@ function App() {
                 </div>
                 <div className="field">
                     <button disabled>Min Capacity</button>
-                    <input onChange={setFilter.bind(null, 'capacity')} type="number" min={data.minCap} max={data.maxCap} step={1} value={filters.capacity} />
+                    <input onChange={setFilter.bind(null, 'capacity')} type="number" min={1} max={999} step={1} value={filters.capacity} />
                 </div>
                 <div className="field">
                     <button disabled>Day</button>
