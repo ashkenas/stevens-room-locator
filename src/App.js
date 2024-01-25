@@ -49,7 +49,7 @@ function App() {
                         if (dayLetterToNumber[dayLetter] === undefined) return;
                         schedule[dayLetterToNumber[dayLetter]].push({
                             course: course,
-                            courseSearch: course.replaceAll(/[ \-]/g, '').toLowerCase(),
+                            courseSearch: course.replaceAll(/[ -]/g, '').toLowerCase(),
                             prof: prof,
                             students: students,
                             classCap: classCap,
@@ -97,7 +97,7 @@ function App() {
             });
         }
         if (filters.course) {
-            const searchTerm = filters.course.replaceAll(/[ \-]/g, '').toLowerCase();
+            const searchTerm = filters.course.replaceAll(/[ -]/g, '').toLowerCase();
             validRooms = validRooms.filter(room => {
                 for (const day in data.schedule[room])
                     for (const { courseSearch } of data.schedule[room][day])
